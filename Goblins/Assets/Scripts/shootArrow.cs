@@ -31,7 +31,7 @@ public class shootArrow : MonoBehaviour {
 	}
 
 	private void SetArrow () {
-		if (Input.GetMouseButtonDown (1)) {
+		if (Input.GetMouseButton (1)) {
 			// if button is pressed, find where mouse is pointing to 
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit;

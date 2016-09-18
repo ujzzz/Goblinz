@@ -28,8 +28,8 @@ public class PlayerMovement : MonoBehaviour {
 		// moves based on input
 		PlayerMove ();
 
-		// if left mouse button clicked then rotates players
-		if (Input.GetMouseButtonDown (0)) {
+		// if left or right mouse button clicked then rotate player
+		if (Input.GetMouseButton (0) || Input.GetMouseButton (1)) {
 			PlayerRotate ();
 			pressed = true;
 		} else {
@@ -39,14 +39,11 @@ public class PlayerMovement : MonoBehaviour {
 
 	// gotta run CPU-ntenstive physics shit in FixedUpdate, which isn't called every frame and less CPU intense
 	void FixedUpdate () {
-		// if left mouse button is pressed
-		if (pressed = true) {
-			// figure uut where mouse click is on the map screen relative to the goblin
-			Quaternion targetRotation = Quaternion.LookRotation (mousePoint - transform.position);	
-			// then rotate the goblin in the direction of the click
-			transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed);
-			pressed = false;
-		} 
+		// figure out where mouse click is on the map screen relative to the goblin
+		Quaternion targetRotation = Quaternion.LookRotation (mousePoint - transform.position);	
+		// then rotate the goblin in the direction of the click
+		transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed);
+		pressed = false;
 	}
 
 	private void PlayerMove () {
@@ -65,7 +62,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
-	private void PlayerRotate () {
+	public void PlayerRotate () {
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit;
 		if (Physics.Raycast (ray, out hit)) {
